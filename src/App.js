@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './App.css';
+import axios from 'axios';
 
 function App() {
   const [formData, setFormData] = useState({
@@ -17,6 +18,9 @@ function App() {
     gender: false,
     primarySymptom: false
   });
+
+  const [response, setResponse] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -41,9 +45,65 @@ function App() {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const generatePrompt = (data) => {
+    return `Please analyze the following patient information and provide a preliminary assessment:
+    
+    Patient Details:
+    - Age: ${data.age}
+    - Gender: ${data.gender}
+    - Race/Ethnicity: ${data.race || 'Not specified'}
+    
+    Symptoms:
+    - Primary Symptom: ${data.primarySymptom}
+    - Secondary Symptom: ${data.secondarySymptom || 'None reported'}
+    - Additional Symptoms: ${data.otherSymptoms || 'None reported'}
+    
+    Please provide:
+    1. Possible conditions to consider
+    2. Recommended next steps
+    3. General health advice based on the symptoms
+    4. Whether immediate medical attention might be needed`;
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
+    setLoading(true);
+
+    try {
+      console.log(process.env.REACT_APP_OPENAI_API_KEY);
+      console.log('api key');
+      const response = await axios.post(
+        'https://api.openai.com/v1/chat/completions',
+        {
+          model: "gpt-3.5-turbo",
+          messages: [
+            {
+              role: "system",
+              content: "You are a helpful medical assistant. While you cannot provide official medical diagnosis, you can offer general information and suggestions based on symptoms."
+            },
+            {
+              role: "user",
+              content: generatePrompt(formData)
+            }
+          ],
+          temperature: 0.7,
+          max_tokens: 1000
+        },
+        {
+          headers: {
+            'Authorization': `Bearer ${process.env.REACT_APP_OPENAI_API_KEY}`,
+            'Content-Type': 'application/json'
+          }
+        }
+      );
+
+      setResponse(response.data.choices[0].message.content);
+    } catch (error) {
+      console.error('Error:', error);
+      setResponse('An error occurred while processing your request. Please try again.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -168,9 +228,26 @@ function App() {
 
           <div className="form-actions">
             <button type="button" className="cancel-button">Cancel</button>
-            <button type="submit" className="submit-button">Submit Form</button>
+            <button 
+              type="submit" 
+              className="submit-button"
+              disabled={loading}
+            >
+              {loading ? 'Processing...' : 'Submit Form'}
+            </button>
           </div>
         </form>
+
+        {response && (
+          <div className="response-section">
+            <h2>Analysis Results</h2>
+            <div className="response-content">
+              {response.split('\n').map((line, index) => (
+                <p key={index}>{line}</p>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
