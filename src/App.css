@@ -193,11 +193,20 @@ label[for]:after {
   display: none;
 }
 
-label[for*="age"]:before,
-label[for*="gender"]:before,
-label[for*="primarySymptom"]:before {
+label:not(.filled)[for*="age"]:before,
+label:not(.filled)[for*="gender"]:before,
+label:not(.filled)[for*="primarySymptom"]:before {
   content: "* ";
   color: var(--accent-color);
+}
+
+/* Add transition for smooth asterisk removal */
+label:before {
+  transition: opacity 0.3s ease;
+}
+
+label.filled:before {
+  opacity: 0;
 }
 
 /* Placeholder styling */

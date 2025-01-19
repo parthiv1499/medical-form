@@ -12,12 +12,25 @@ function App() {
     image: null
   });
 
+  const [filledFields, setFilledFields] = useState({
+    age: false,
+    gender: false,
+    primarySymptom: false
+  });
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prevState => ({
       ...prevState,
       [name]: value
     }));
+
+    if (['age', 'gender', 'primarySymptom'].includes(name)) {
+      setFilledFields(prevState => ({
+        ...prevState,
+        [name]: value.trim() !== ''
+      }));
+    }
   };
 
   const handleImageChange = (e) => {
@@ -46,7 +59,9 @@ function App() {
             <div className="form-section">
               <h2>Personal Information</h2>
               <div className="form-group">
-                <label htmlFor="age">Age *</label>
+                <label htmlFor="age" className={filledFields.age ? 'filled' : ''}>
+                  Age *
+                </label>
                 <input
                   type="number"
                   id="age"
@@ -60,7 +75,9 @@ function App() {
               </div>
 
               <div className="form-group">
-                <label htmlFor="gender">Gender *</label>
+                <label htmlFor="gender" className={filledFields.gender ? 'filled' : ''}>
+                  Gender *
+                </label>
                 <select
                   id="gender"
                   name="gender"
@@ -92,7 +109,9 @@ function App() {
             <div className="form-section">
               <h2>Symptoms Information</h2>
               <div className="form-group">
-                <label htmlFor="primarySymptom">Primary Symptom *</label>
+                <label htmlFor="primarySymptom" className={filledFields.primarySymptom ? 'filled' : ''}>
+                  Primary Symptom *
+                </label>
                 <input
                   type="text"
                   id="primarySymptom"
