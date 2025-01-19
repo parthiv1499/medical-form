@@ -31,95 +31,126 @@ function App() {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log('Form submitted:', formData);
-    // Here you would typically send the data to a server
   };
 
   return (
     <div className="App">
+      <div className="header">
+        <h1>Patient Information Form</h1>
+        <p className="subtitle">Please fill out all required fields marked with *</p>
+      </div>
+      
       <div className="form-container">
-        <h1>Medical Information Form</h1>
         <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label htmlFor="age">Age:</label>
-            <input
-              type="number"
-              id="age"
-              name="age"
-              value={formData.age}
-              onChange={handleChange}
-            />
+          <div className="form-sections">
+            <div className="form-section">
+              <h2>Personal Information</h2>
+              <div className="form-group">
+                <label htmlFor="age">Age *</label>
+                <input
+                  type="number"
+                  id="age"
+                  name="age"
+                  value={formData.age}
+                  onChange={handleChange}
+                  required
+                  min="0"
+                  max="120"
+                />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="gender">Gender *</label>
+                <select
+                  id="gender"
+                  name="gender"
+                  value={formData.gender}
+                  onChange={handleChange}
+                  required
+                >
+                  <option value="">Please select</option>
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                  <option value="other">Other</option>
+                  <option value="prefer-not-to-say">Prefer not to say</option>
+                </select>
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="race">Race/Ethnicity</label>
+                <input
+                  type="text"
+                  id="race"
+                  name="race"
+                  value={formData.race}
+                  onChange={handleChange}
+                  placeholder="Optional"
+                />
+              </div>
+            </div>
+
+            <div className="form-section">
+              <h2>Symptoms Information</h2>
+              <div className="form-group">
+                <label htmlFor="primarySymptom">Primary Symptom *</label>
+                <input
+                  type="text"
+                  id="primarySymptom"
+                  name="primarySymptom"
+                  value={formData.primarySymptom}
+                  onChange={handleChange}
+                  required
+                  placeholder="Main reason for visit"
+                />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="secondarySymptom">Secondary Symptom</label>
+                <input
+                  type="text"
+                  id="secondarySymptom"
+                  name="secondarySymptom"
+                  value={formData.secondarySymptom}
+                  onChange={handleChange}
+                  placeholder="Additional symptoms"
+                />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="otherSymptoms">Additional Symptoms & Notes</label>
+                <textarea
+                  id="otherSymptoms"
+                  name="otherSymptoms"
+                  value={formData.otherSymptoms}
+                  onChange={handleChange}
+                  rows="4"
+                  placeholder="Please describe any other symptoms or relevant information"
+                />
+              </div>
+            </div>
+
+            <div className="form-section">
+              <h2>Supporting Documentation</h2>
+              <div className="form-group file-upload">
+                <label htmlFor="image">
+                  Upload Related Images
+                  <span className="file-help">(X-rays, Test Results, etc.)</span>
+                </label>
+                <input
+                  type="file"
+                  id="image"
+                  name="image"
+                  onChange={handleImageChange}
+                  accept="image/*"
+                />
+              </div>
+            </div>
           </div>
 
-          <div className="form-group">
-            <label htmlFor="gender">Gender:</label>
-            <select
-              id="gender"
-              name="gender"
-              value={formData.gender}
-              onChange={handleChange}
-            >
-              <option value="">Select Gender</option>
-              <option value="male">Male</option>
-              <option value="female">Female</option>
-            </select>
+          <div className="form-actions">
+            <button type="button" className="cancel-button">Cancel</button>
+            <button type="submit" className="submit-button">Submit Form</button>
           </div>
-
-          <div className="form-group">
-            <label htmlFor="race">Race:</label>
-            <input
-              type="text"
-              id="race"
-              name="race"
-              value={formData.race}
-              onChange={handleChange}
-            />
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="primarySymptom">Primary Symptom:</label>
-            <input
-              type="text"
-              id="primarySymptom"
-              name="primarySymptom"
-              value={formData.primarySymptom}
-              onChange={handleChange}
-            />
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="secondarySymptom">Secondary Symptom:</label>
-            <input
-              type="text"
-              id="secondarySymptom"
-              name="secondarySymptom"
-              value={formData.secondarySymptom}
-              onChange={handleChange}
-            />
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="otherSymptoms">Other Symptoms:</label>
-            <textarea
-              id="otherSymptoms"
-              name="otherSymptoms"
-              value={formData.otherSymptoms}
-              onChange={handleChange}
-              rows="4"
-            />
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="image">Upload Image (if any):</label>
-            <input
-              type="file"
-              id="image"
-              name="image"
-              onChange={handleImageChange}
-              accept="image/*"
-            />
-          </div>
-
-          <button type="submit" className="submit-button">Submit</button>
         </form>
       </div>
     </div>
