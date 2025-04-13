@@ -1,31 +1,99 @@
-# Getting Started with Create React App
+# Medical Form Application
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A comprehensive medical form application with user authentication and conversation history.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+- User registration and login
+- Medical symptom form submission
+- AI-powered symptom analysis using OpenAI's API
+- Conversation history tracking
+- Secure authentication
 
-### `npm start`
+## Tech Stack
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Frontend
+- React
+- React Router
+- Axios
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Backend
+- Node.js
+- Express
+- MongoDB
+- JWT Authentication
+- bcrypt for password hashing
 
-### `npm test`
+## Installation
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Prerequisites
+- Node.js (v14+ recommended)
+- MongoDB (local installation or MongoDB Atlas account)
 
-### `npm run build`
+### Setup Environment Variables
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Create or modify the `.env` file in the root directory:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```
+REACT_APP_OPENAI_API_KEY=your_openai_api_key
+OPENAI_API_KEY=your_openai_api_key
+MONGODB_URI=your_mongodb_connection_string
+JWT_SECRET=your_secret_key
+REACT_APP_API_URL=http://localhost:5000/api
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Install Backend Dependencies
+
+```bash
+cd backend
+npm install
+```
+
+### Install Frontend Dependencies
+
+```bash
+npm install
+```
+
+## Running the Application
+
+### Start the Backend Server
+
+```bash
+cd backend
+npm run dev
+```
+
+### Start the Frontend React Application
+
+```bash
+npm start
+```
+
+The application will run on `http://localhost:3000`, and the backend API on `http://localhost:5000`.
+
+## Usage
+
+1. Register a new account or login with existing credentials
+2. Fill out the medical form with your symptoms
+3. Submit the form to receive an AI-generated analysis
+4. View your consultation history anytime by clicking on "Consultation History" in the navigation
+
+## API Endpoints
+
+### Authentication
+- POST `/api/auth/register` - Register a new user
+- POST `/api/auth/login` - Login user
+- GET `/api/auth/me` - Get current user (protected)
+
+### Conversations
+- GET `/api/conversations` - Get all user conversations (protected)
+- POST `/api/conversations` - Create a new conversation (protected)
+- POST `/api/conversations/generate` - Generate AI response and save conversation (protected)
+
+## Security
+
+- Passwords are hashed using bcrypt
+- JWT authentication for protected routes
+- MongoDB for secure data storage
 

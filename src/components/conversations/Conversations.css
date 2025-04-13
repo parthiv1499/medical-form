@@ -1,0 +1,147 @@
+.conversation-history-container {
+  padding: 2rem;
+  margin-bottom: 3rem;
+}
+
+.conversation-history-container h2 {
+  margin-bottom: 2rem;
+  color: var(--primary-color);
+  border-bottom: 2px solid var(--secondary-color);
+  padding-bottom: 0.5rem;
+}
+
+.no-conversations {
+  background: #f8f9fa;
+  padding: 2rem;
+  text-align: center;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+}
+
+.conversations-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 2rem;
+}
+
+.conversations-list {
+  background: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+.conversation-item {
+  padding: 1rem;
+  border-bottom: 1px solid var(--border-color);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.conversation-item:hover {
+  background-color: rgba(52, 152, 219, 0.1);
+}
+
+.conversation-item.selected {
+  background-color: rgba(52, 152, 219, 0.2);
+  border-left: 4px solid var(--secondary-color);
+}
+
+.conversation-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.conversation-primary {
+  font-weight: bold;
+  color: var(--primary-color);
+}
+
+.conversation-date {
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.conversation-details {
+  background: white;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  padding: 2rem;
+  box-shadow: var(--shadow);
+}
+
+.no-selection {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 300px;
+  color: #666;
+  font-style: italic;
+}
+
+.selected-conversation {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.conversation-header {
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 1rem;
+}
+
+.conversation-header h3 {
+  color: var(--primary-color);
+  margin-bottom: 0.5rem;
+}
+
+.conversation-meta {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.patient-details,
+.symptoms,
+.ai-response {
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 1.5rem;
+}
+
+.patient-details h4,
+.symptoms h4,
+.ai-response h4 {
+  margin-bottom: 1rem;
+  color: var(--primary-color);
+}
+
+.patient-details ul,
+.symptoms ul {
+  padding-left: 1.5rem;
+  list-style-type: none;
+}
+
+.patient-details li,
+.symptoms li {
+  margin-bottom: 0.5rem;
+}
+
+.ai-response .response-content {
+  line-height: 1.6;
+}
+
+.ai-response .response-content p {
+  margin-bottom: 0.8rem;
+}
+
+@media (max-width: 768px) {
+  .conversations-wrapper {
+    grid-template-columns: 1fr;
+  }
+  
+  .conversations-list {
+    max-height: 300px;
+  }
+} 
