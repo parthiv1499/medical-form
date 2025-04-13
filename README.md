@@ -57,6 +57,12 @@ npm install
 
 ## Running the Application
 
+### Start MongoDB
+
+```bash
+mongod --dbpath ~/mongodb-data/db
+```
+
 ### Start the Backend Server
 
 ```bash
